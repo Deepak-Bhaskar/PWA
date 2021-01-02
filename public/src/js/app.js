@@ -1,11 +1,24 @@
-//Checking promises for legacy browser
+var deferredPrompt;
+
 if (!window.Promise) {
   window.Promise = Promise;
 }
 
-// Checking service worker is available for browser or not.
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js").then(function () {
-    console.log("Service worker registered successfully!");
-  });
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then(function () {
+      console.log("Service worker registered!");
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 }
+
+// For handling prompt modal open
+// window.addEventListener("beforeinstallprompt", function (event) {
+//   console.log("beforeinstallprompt fired");
+//   event.preventDefault();
+//   deferredPrompt = event;
+//   return false;
+// });
